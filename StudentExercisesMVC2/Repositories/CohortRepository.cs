@@ -60,6 +60,38 @@ namespace StudentExercisesMVC2.Repositories
             }
         }
 
+        public static Cohort GetCohort(int id)
+        {
+            Cohort cohort = null;
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            SELECT c.Id,
+                                c.Designation
+                            FROM Cohort c WHERE c.Id = @Id
+                        ";
+                    cmd.Parameters.Add(new SqlParameter("@Id", id));
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        cohort = new Cohort
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                            Designation = reader.GetString(reader.GetOrdinal("Designation"))
+                        };
+                    }
+
+                    reader.Close();
+                    return cohort;
+                }
+            }
+        }
+
+        //post new cohort to the database
         public static Cohort CreateCohort(Cohort cohort)
         {
             using (SqlConnection conn = Connection)
@@ -120,37 +152,5 @@ namespace StudentExercisesMVC2.Repositories
                 }
             }
         }
-
-        public static Cohort GetCohort(int id)
-        {
-            Cohort cohort = null;
-            using (SqlConnection conn = Connection)
-            {
-                conn.Open();
-                using (SqlCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                            SELECT c.Id,
-                                c.Designation,
-                            FROM Cohort c WHERE c.Id = @Id
-                        ";
-                    cmd.Parameters.Add(new SqlParameter("@Id", id));
-                    SqlDataReader reader = cmd.ExecuteReader();
-
-                    if (reader.Read())
-                    {
-                        cohort = new Cohort
-                        {
-                            Id = reader.GetInt32(reader.GetOrdinal("Id")),
-                            Designation = reader.GetString(reader.GetOrdinal("Designation"))
-                        };
-                    }
-
-                    reader.Close();
-                    return cohort;
-                }
-            }
-        }
-
     }
 }

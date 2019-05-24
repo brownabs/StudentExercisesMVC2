@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudentExercisesMVC2.Models.ViewModels;
 using StudentExercisesMVC2.Repositories;
@@ -26,6 +21,8 @@ namespace StudentExercisesMVC2.Controllers
         // GET: Students/Details/5
         public ActionResult Details(int id)
         {
+
+            //encapsulation StudentRepository.GetStudent
             var student = StudentRepository.GetStudent(id);
             return View(student);
         }
