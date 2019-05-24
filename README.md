@@ -1,3 +1,1 @@
-# StudentExercisesMVC
-# StudentExercisesMVC
 # StudentExercisesMVC2
