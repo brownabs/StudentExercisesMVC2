@@ -74,7 +74,6 @@ namespace StudentExercisesMVC2.Controllers
             return View(student);
         }
 
-        // POST: Students/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete([FromForm] int id)

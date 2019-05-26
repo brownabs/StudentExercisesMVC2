@@ -99,26 +99,38 @@ namespace StudentExercisesMVC2.Repositories
 
         public static bool DeleteStudent(int id)
         {
-            try
+            try { 
+            using (SqlConnection conn = Connection)
             {
-                using (SqlConnection conn = Connection)
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    conn.Open();
-                    using (SqlCommand cmd = conn.CreateCommand())
-                    {
-                        cmd.CommandText = @"DELETE FROM Student WHERE Id = @id";
-                        cmd.Parameters.Add(new SqlParameter("@id", id));
+                    cmd.CommandText = @"
+                        DELETE FROM StudentExercises WHERE StudentId = @id
+                        DELETE FROM Student WHERE Id = @id";
+                    cmd.Parameters.Add(new SqlParameter("@id", id));
 
-                        int rowsAffected = cmd.ExecuteNonQuery();
-                        if (rowsAffected == 0) return false;
-                        return true;
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                        if (rowsAffected == 0)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
                     }
                 }
             }
-            catch
-            {
-                return false;
+                catch
+                {
+                    return false;
+                }
             }
+
+    private static void View()
+        {
+            throw new NotImplementedException();
         }
 
         public static void UpdateStudent(Student student)
