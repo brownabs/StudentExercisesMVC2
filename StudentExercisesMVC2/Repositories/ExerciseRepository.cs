@@ -172,7 +172,7 @@ namespace StudentExercisesMVC2.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                            SELECT e.Id, e.Title, e.Langauge
+                            SELECT e.Id, e.Title, e.ExerciseLanguage
                             FROM Exercise e WHERE e.Id = @Id
                         ";
                     cmd.Parameters.Add(new SqlParameter("@Id", id));
